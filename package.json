@@ -1,0 +1,53 @@
+{
+  "name": "raspored-smjena",
+  "version": "1.0.0",
+  "description": "Raspored Smjena by AcoRonaldo",
+  "main": "main.js",
+  "author": "AcoRonaldo",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.acoronaldo.raspored-smjena",
+    "productName": "Raspored Smjena",
+    "copyright": "Copyright 2026 AcoRonaldo",
+    "directories": { "output": "dist" },
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "assets/icon.ico"
+    },
+    "linux": {
+      "target": [{ "target": "AppImage", "arch": ["x64"] }],
+      "icon": "assets/icon.png",
+      "category": "Office"
+    },
+    "mac": {
+      "target": [{ "target": "dmg", "arch": ["x64"] }],
+      "icon": "assets/icon.png",
+      "category": "public.app-category.productivity"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Raspored Smjena"
+    },
+    "files": [
+      "main.js", "preload.js",
+      "renderer/**/*", "assets/**/*",
+      "node_modules/**/*"
+    ]
+  }
+}

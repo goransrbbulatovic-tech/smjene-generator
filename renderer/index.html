@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raspored Smjena — by AcoRonaldo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TITLE BAR -->
+<div id="titlebar">
+  <div class="tb-drag">
+    <div class="tb-logo">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="7" fill="#06b6d4"/>
+        <rect x="5" y="9" width="22" height="15" rx="2" fill="#0a1628" stroke="#06b6d4" stroke-width="1.5"/>
+        <rect x="5" y="9" width="22" height="5" rx="2" fill="#06b6d4"/>
+        <rect x="9" y="7" width="2" height="4" rx="1" fill="#f59e0b"/>
+        <rect x="21" y="7" width="2" height="4" rx="1" fill="#f59e0b"/>
+        <rect x="9" y="17" width="3" height="2.5" rx="0.5" fill="#06b6d4"/>
+        <rect x="14" y="17" width="3" height="2.5" rx="0.5" fill="#22d3ee"/>
+        <rect x="19" y="17" width="3" height="2.5" rx="0.5" fill="#06b6d4"/>
+        <rect x="9" y="21" width="3" height="2.5" rx="0.5" fill="#22d3ee"/>
+        <rect x="14" y="21" width="3" height="2.5" rx="0.5" fill="#06b6d4"/>
+        <rect x="19" y="21" width="3" height="2.5" rx="0.5" fill="#f59e0b"/>
+      </svg>
+    </div>
+    <span class="tb-title">Raspored Smjena <span class="tb-by">by AcoRonaldo</span></span>
+    <!-- Project switcher -->
+    <div class="tb-project-area" id="tb-project-area">
+      <select id="project-switcher" class="project-select" title="Aktivni projekat/raspored"></select>
+      <button class="tb-proj-btn" id="btn-new-project" title="Novi raspored">＋</button>
+      <button class="tb-proj-btn" id="btn-del-project" title="Obriši raspored">✕</button>
+    </div>
+  </div>
+  <div class="tb-controls">
+    <button class="tb-btn" id="btn-min">&#8211;</button>
+    <button class="tb-btn" id="btn-max">&#9633;</button>
+    <button class="tb-btn tb-close" id="btn-close">&#10005;</button>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div id="layout">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="nav-section-label">RASPORED</div>
+    <button class="nav-btn active" data-page="import">
+      <svg class="nav-ico" viewBox="0 0 24 24"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="currentColor"/><path d="M20 18H4v2h16v-2z" fill="currentColor" opacity=".6"/></svg>Uvoz Fajla
+    </button>
+    <button class="nav-btn" data-page="calendar">
+      <svg class="nav-ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.8" fill="none" stroke="currentColor"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.8"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="1.8"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="1.8"/></svg>Kalendar
+    </button>
+    <button class="nav-btn" data-page="weekly">
+      <svg class="nav-ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/><line x1="3" y1="8" x2="21" y2="8" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="3" x2="8" y2="21" stroke="currentColor" stroke-width="1.5"/><line x1="13" y1="3" x2="13" y2="21" stroke="currentColor" stroke-width="1.5"/><line x1="18" y1="3" x2="18" y2="21" stroke="currentColor" stroke-width="1.5"/></svg>Sedmični Pogled
+    </button>
+    <button class="nav-btn" data-page="edit">
+      <svg class="nav-ico" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5-4-4L4 16v4z" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Izmjena Smjena
+    </button>
+    <button class="nav-btn" data-page="stats">
+      <svg class="nav-ico" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1" fill="currentColor" opacity=".7"/><rect x="10" y="7" width="4" height="14" rx="1" fill="currentColor"/><rect x="17" y="3" width="4" height="18" rx="1" fill="currentColor" opacity=".7"/></svg>Statistike
+    </button>
+    <button class="nav-btn" data-page="export">
+      <svg class="nav-ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="1.8" fill="none"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8" fill="none"/><line x1="12" y1="18" x2="12" y2="12" stroke="currentColor" stroke-width="1.8"/><polyline points="9 15 12 12 15 15" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Izvoz
+    </button>
+    <div class="nav-divider"></div>
+    <div class="nav-section-label">ALATI</div>
+    <button class="nav-btn" data-page="reminder">
+      <svg class="nav-ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Podsjetnici
+    </button>
+    <button class="nav-btn" data-page="settings">
+      <svg class="nav-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Postavke
+    </button>
+    <div class="sidebar-footer">
+      <div class="sidebar-file-info" id="sidebar-file-info">Nema učitanog fajla</div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- ═══ IMPORT ═══════════════════════════════════════════════════ -->
+    <div class="page active" id="page-import">
+      <div class="page-header">
+        <h1 class="page-title">Uvoz Rasporeda</h1>
+        <p class="page-sub">Učitaj Excel ili CSV fajl sa rasporedom smjena</p>
+      </div>
+      <div id="drop-zone" class="drop-zone">
+        <div class="drop-inner">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="#06b6d4"/><path d="M20 18H4v2h16v-2z" fill="#06b6d4" opacity=".6"/></svg>
+          <div class="drop-title">Prevuci Excel fajl ovdje</div>
+          <div class="drop-sub">ili</div>
+          <button class="btn-primary" id="btn-open-file">Odaberi fajl</button>
+          <div class="drop-hint">Podržano: .xlsx · .xls · .xlsm · .csv</div>
+        </div>
+      </div>
+      <div id="auto-import-bar" class="auto-import-bar hidden">
+        <span id="auto-import-label">📄 Prethodni fajl:</span>
+        <button class="btn-ghost" id="btn-refresh-file">🔄 Osvježi iz fajla</button>
+        <button class="btn-ghost btn-sm" id="btn-clear-file">✕</button>
+      </div>
+      <div id="person-picker" class="person-picker hidden">
+        <div class="section-header">
+          <h2 class="section-title">Odaberi osobu</h2>
+          <input type="text" id="search-person" class="search-input" placeholder="Pretraži ime...">
+        </div>
+        <div id="person-grid" class="person-grid"></div>
+        <div class="import-info" id="import-info"></div>
+      </div>
+    </div>
+
+    <!-- ═══ CALENDAR ═════════════════════════════════════════════════ -->
+    <div class="page" id="page-calendar">
+      <!-- This top part never scrolls -->
+      <div class="cal-fixed-top" id="cal-fixed-top">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title" id="cal-person-name">Kalendar Smjena</h1>
+          <p class="page-sub" id="cal-stats-line">Odaberi osobu da vidiš smjene</p>
+        </div>
+        <div class="cal-controls">
+          <select class="select-input select-sm" id="cal-person-filter" title="Odaberi osobu">
+            <option value="">— Sve osobe —</option>
+          </select>
+          <div class="cal-month-nav">
+            <button class="icon-btn" id="cal-prev">&#8249;</button>
+            <span class="cal-month-label" id="cal-month-label">—</span>
+            <button class="icon-btn" id="cal-next">&#8250;</button>
+            <button class="btn-ghost btn-sm" id="cal-today">Danas</button>
+          </div>
+          <button class="btn-ghost btn-sm" id="btn-copy-week" title="Kopiraj sedmicu">📋 Kopiraj sedmicu</button>
+          <button class="btn-ghost btn-sm" id="btn-copy-month" title="Kopiraj mjesec">📋 Kopiraj mjesec</button>
+        </div>
+      </div>
+      <div class="stats-row" id="stats-row">
+        <div class="stat-card"><div class="stat-val" id="stat-shifts">—</div><div class="stat-label">Smjena ovaj mj.</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-hours">—</div><div class="stat-label">Sati rada</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-next">—</div><div class="stat-label">Sljedeća smjena</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-type">—</div><div class="stat-label">Najčešći tip</div></div>
+      </div>
+      <!-- Multi-select delete bar (hidden until selections made) -->
+      <div id="cal-select-bar" class="cal-select-bar hidden">
+        <span id="cal-select-count" class="sel-count">0 odabrano</span>
+        <button class="btn-ghost btn-sm" id="btn-sel-all-day">Sve u danu</button>
+        <button class="btn-ghost btn-sm" id="btn-sel-all-month">Sve u mj.</button>
+        <button class="btn-ghost btn-sm" id="btn-sel-person-all">Svi za osobu</button>
+        <button class="btn-ghost btn-sm" id="btn-sel-clear">✕ Poništi</button>
+        <button class="btn-danger btn-sm" id="btn-sel-delete" style="padding:5px 14px">🗑 Obriši odabrane</button>
+      </div>
+      <div class="cal-weekdays"><div>PON</div><div>UTO</div><div>SRI</div><div>ČET</div><div>PET</div><div>SUB</div><div>NED</div></div>
+      </div><!-- /cal-fixed-top -->
+      <!-- Only this scrolls -->
+      <div class="cal-scroll-body">
+        <div class="cal-wrapper">
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+        <div class="shift-legend" id="shift-legend" style="padding:0 0 16px"></div>
+      </div>
+    </div>
+
+    <!-- ═══ WEEKLY VIEW ══════════════════════════════════════════════ -->
+    <div class="page" id="page-weekly">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title">Sedmični Pogled</h1>
+          <p class="page-sub" id="weekly-sub">Sve osobe — pregled sedmice</p>
+        </div>
+        <div class="cal-month-nav">
+          <button class="icon-btn" id="week-prev">&#8249;</button>
+          <span class="cal-month-label" id="week-label">—</span>
+          <button class="icon-btn" id="week-next">&#8250;</button>
+          <button class="btn-ghost btn-sm" id="week-today">Ova sedmica</button>
+        </div>
+      </div>
+      <div class="weekly-wrap" id="weekly-wrap">
+        <div class="weekly-grid" id="weekly-grid"></div>
+      </div>
+    </div>
+
+    <!-- ═══ EDIT ═════════════════════════════════════════════════════ -->
+    <div class="page" id="page-edit">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title">Izmjena Smjena</h1>
+          <p class="page-sub" id="edit-person-label">Sve smjene</p>
+        </div>
+        <div class="row-gap">
+          <button class="btn-primary" id="btn-add-shift">+ Dodaj Smjenu</button>
+          <button class="btn-ghost" id="btn-save-changes">💾 Sačuvaj</button>
+        </div>
+      </div>
+      <!-- People management bar -->
+      <div class="people-mgmt-bar" id="people-mgmt-bar">
+        <div class="people-mgmt-label">👥 Osobe u rasporedu:</div>
+        <div class="people-chips" id="people-chips"></div>
+      </div>
+
+      <div class="edit-filter-row">
+        <select class="select-input" id="edit-month-filter"><option value="">Svi mjeseci</option></select>
+        <select class="select-input" id="edit-person-filter"><option value="">Sve osobe</option></select>
+        <input type="text" class="search-input" id="edit-search" placeholder="Pretraži...">
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="edit-table">
+          <thead>
+            <tr><th>Osoba</th><th>Datum</th><th>Dan</th><th>Početak</th><th>Kraj</th><th>Tip</th><th>Sati</th><th>Akcija</th></tr>
+          </thead>
+          <tbody id="edit-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ STATS ════════════════════════════════════════════════════ -->
+    <div class="page" id="page-stats">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title">Statistike</h1>
+          <p class="page-sub">Analiza rada po osobi i periodu</p>
+        </div>
+        <select class="select-input" id="stats-person-select" style="width:180px"><option value="">— Odaberi osobu —</option></select>
+      </div>
+      <div class="stats-cards-big" id="stats-cards-big"></div>
+      <div class="stats-two-col">
+        <div class="stats-panel">
+          <h3 class="section-title" style="margin-bottom:14px">📊 Sati po mjesecu</h3>
+          <div id="stats-chart-hours"></div>
+        </div>
+        <div class="stats-panel">
+          <h3 class="section-title" style="margin-bottom:14px">🕐 Tipovi smjena</h3>
+          <div id="stats-chart-types"></div>
+        </div>
+      </div>
+      <div class="stats-panel" style="margin-top:16px">
+        <h3 class="section-title" style="margin-bottom:14px">📅 Detalji po mjesecu</h3>
+        <div id="stats-table-months"></div>
+      </div>
+    </div>
+
+    <!-- ═══ EXPORT ═══════════════════════════════════════════════════ -->
+    <div class="page" id="page-export">
+      <div class="page-header">
+        <h1 class="page-title">Izvoz Rasporeda</h1>
+        <p class="page-sub">Excel, PDF ili WhatsApp — po osobi ili sve odjednom</p>
+      </div>
+
+      <!-- Person selector for export -->
+      <div class="export-person-selector" id="export-person-selector">
+        <div class="eps-header">
+          <span class="section-title">Odaberi osobe za izvoz</span>
+          <div style="display:flex;gap:8px">
+            <button class="btn-ghost btn-sm" id="exp-sel-all">✓ Sve</button>
+            <button class="btn-ghost btn-sm" id="exp-sel-none">✗ Nijednu</button>
+          </div>
+        </div>
+        <div class="eps-chips" id="eps-chips"></div>
+      </div>
+
+      <div class="export-grid">
+        <!-- Excel -->
+        <div class="export-card">
+          <div class="export-card-icon"><svg width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#1a6e3c"/><text x="10" y="30" font-size="16" font-weight="700" fill="#22c55e" font-family="Arial">XLS</text></svg></div>
+          <h3 class="export-card-title">Excel Izvještaj</h3>
+          <p class="export-card-desc">Stilizirani .xlsx sa listom po osobama, kalendarom i statistikama.</p>
+          <div class="export-options">
+            <label class="check-label"><input type="checkbox" id="exp-stats" checked> Statistike po miesecu</label>
+          </div>
+          <button class="btn-success" id="btn-export-excel">⬇ Preuzmi Excel</button>
+        </div>
+
+        <!-- PDF -->
+        <div class="export-card">
+          <div class="export-card-icon"><svg width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#7c2d12"/><text x="10" y="30" font-size="16" font-weight="700" fill="#f97316" font-family="Arial">PDF</text></svg></div>
+          <h3 class="export-card-title">PDF Izvještaj</h3>
+          <p class="export-card-desc">Dark dizajn PDF sa kalendarom, person karticama i tabelom smjena.</p>
+          <div class="export-options">
+            <label class="check-label"><input type="radio" name="pdf-orient" value="portrait" checked> A4 vertikalno</label>
+            <label class="check-label"><input type="radio" name="pdf-orient" value="landscape"> A4 horizontalno</label>
+          </div>
+          <button class="btn-danger" id="btn-export-pdf">⬇ Preuzmi PDF</button>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="export-card">
+          <div class="export-card-icon"><svg width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#14532d"/><text x="7" y="30" font-size="13" font-weight="700" fill="#4ade80" font-family="Arial">WA</text></svg></div>
+          <h3 class="export-card-title">WhatsApp / Clipboard</h3>
+          <p class="export-card-desc">Kopiraj raspored kao tekst za slanje kolegama.</p>
+          <div class="export-options">
+            <label class="check-label"><input type="radio" name="wa-range" value="week" checked> Ova sedmica</label>
+            <label class="check-label"><input type="radio" name="wa-range" value="month"> Ovaj mjesec</label>
+            <label class="check-label"><input type="radio" name="wa-range" value="all"> Sve smjene</label>
+          </div>
+          <button class="btn-whatsapp" id="btn-copy-whatsapp">📋 Kopiraj tekst</button>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="export-preview">
+        <h3 class="section-title" style="margin-bottom:14px">👤 Klikni osobu za pregled smjena</h3>
+        <div class="export-preview-layout">
+          <div class="export-person-list" id="export-person-list">
+            <div style="color:var(--text-dim);font-size:13px;padding:12px">Učitaj fajl da vidiš osobe.</div>
+          </div>
+          <div class="export-shift-detail" id="export-shift-detail">
+            <div style="padding:20px;color:var(--text-dim);font-size:13px">← Klikni osobu za pregled</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ REMINDERS ════════════════════════════════════════════════ -->
+    <div class="page" id="page-reminder">
+      <div class="page-header-row">
+        <div><h1 class="page-title">Podsjetnici</h1><p class="page-sub">Bilješke i lični zadaci</p></div>
+        <button class="btn-primary" id="btn-add-reminder">+ Novi Podsjetnik</button>
+      </div>
+      <div class="reminder-layout">
+        <div class="reminder-cal-col">
+          <div class="reminder-cal-header">
+            <button class="icon-btn" id="rem-cal-prev">&#8249;</button>
+            <span id="rem-cal-label">—</span>
+            <button class="icon-btn" id="rem-cal-next">&#8250;</button>
+          </div>
+          <div class="rem-weekdays"><div>P</div><div>U</div><div>S</div><div>Č</div><div>P</div><div>S</div><div>N</div></div>
+          <div class="rem-grid" id="rem-grid"></div>
+        </div>
+        <div class="reminder-list-col">
+          <div class="reminder-filter-row">
+            <button class="filter-chip active" data-filter="all">Sve</button>
+            <button class="filter-chip" data-filter="work">Posao</button>
+            <button class="filter-chip" data-filter="personal">Lično</button>
+            <button class="filter-chip" data-filter="urgent">Hitno</button>
+          </div>
+          <div id="reminder-list" class="reminder-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SETTINGS ════════════════════════════════════════════════ -->
+    <div class="page" id="page-settings">
+      <div class="page-header"><h1 class="page-title">Postavke</h1><p class="page-sub">Teme, pozadina, notifikacije i backup</p></div>
+
+      <div class="settings-grid">
+        <!-- Themes -->
+        <div class="settings-section">
+          <h3 class="section-title">🎨 Tema</h3>
+          <div class="theme-reset-row">
+            <button class="btn-ghost btn-sm" id="btn-reset-theme">↩ Vrati na Midnight (default)</button>
+          </div>
+          <div class="theme-grid">
+            <div class="theme-card active" data-theme="midnight"><div class="theme-preview tp-midnight"></div><div class="theme-name">Midnight</div></div>
+            <div class="theme-card" data-theme="carbon"><div class="theme-preview tp-carbon"></div><div class="theme-name">Carbon</div></div>
+            <div class="theme-card" data-theme="forest"><div class="theme-preview tp-forest"></div><div class="theme-name">Forest</div></div>
+            <div class="theme-card" data-theme="crimson"><div class="theme-preview tp-crimson"></div><div class="theme-name">Crimson</div></div>
+            <div class="theme-card" data-theme="aurora"><div class="theme-preview tp-aurora"></div><div class="theme-name">Aurora</div></div>
+            <div class="theme-card" data-theme="steel"><div class="theme-preview tp-steel"></div><div class="theme-name">Steel</div></div>
+          </div>
+          <button class="btn-theme-reset" id="btn-theme-reset">↩ Vrati na Midnight (default)</button>
+        </div>
+
+        <!-- Background -->
+        <div class="settings-section">
+          <h3 class="section-title">🖼️ Pozadina</h3>
+          <div class="bg-options">
+            <button class="btn-ghost" id="btn-pick-image">📷 Slika</button>
+            <button class="btn-ghost" id="btn-pick-color">🎨 Boja</button>
+            <input type="color" id="bg-color-picker" value="#080d1a" style="opacity:0;position:absolute;width:0">
+  <input type="color" id="person-color-picker" style="opacity:0;position:absolute;width:0">
+            <button class="btn-ghost" id="btn-reset-bg">↩ Reset</button>
+          </div>
+          <div class="bg-opacity-row">
+            <label class="opacity-label">Overlay:</label>
+            <input type="range" id="bg-opacity" min="0" max="100" value="70" class="range-input">
+            <span id="bg-opacity-val">70%</span>
+          </div>
+          <div class="current-bg-preview" id="current-bg-preview">Nema prilagođene pozadine</div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="settings-section">
+          <h3 class="section-title">🔔 Notifikacije</h3>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Podsjetnik 24h prije smjene</div>
+              <div class="setting-desc">Windows notifikacija dan ranije</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="notif-24h" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Podsjetnik 1h prije smjene</div>
+              <div class="setting-desc">Podsjetnik sat vremena ranije</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="notif-1h" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Zvuk pri hoveru (miš na smjenu)</div>
+              <div class="setting-desc">Reproducira ton kad miš prođe iznad smjene</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="sound-hover" checked><span class="toggle-slider"></span></label>
+          </div>
+          <button class="btn-ghost" id="btn-test-notif" style="margin-top:10px">🔔 Test notifikacija</button>
+        </div>
+
+        <!-- Backup -->
+        <div class="settings-section">
+          <h3 class="section-title">💾 Backup i Restore</h3>
+          <p class="setting-desc" style="margin-bottom:12px">Eksportuj sve podatke kao JSON fajl, ili importuj prethodni backup na drugi računar.</p>
+          <div class="bg-options">
+            <button class="btn-primary" id="btn-backup-export">⬇ Eksport backup</button>
+            <button class="btn-ghost"   id="btn-backup-import">⬆ Import backup</button>
+          </div>
+          <div class="current-bg-preview" id="backup-status" style="margin-top:10px">—</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL: Shift -->
+<div id="modal-shift" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header"><h3 id="modal-shift-title">Dodaj Smjenu</h3><button class="modal-close" id="modal-shift-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Osoba</label>
+          <input type="text" class="text-input" id="ms-person" placeholder="Upiši ime..." autocomplete="off" spellcheck="false">
+          <datalist id="ms-person-list"></datalist>
+          <div id="ms-person-quick" class="person-quick-row" style="display:none"></div>
+        </div>
+        <div class="form-group"><label>Datum</label><input type="date" class="text-input" id="ms-date"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Početak</label><input type="time" class="text-input" id="ms-start"></div>
+        <div class="form-group"><label>Kraj</label><input type="time" class="text-input" id="ms-end"></div>
+      </div>
+      <div class="form-group"><label>Tip smjene</label>
+        <select class="select-input" id="ms-type">
+          <option value="night">🌙 Noćna (00:00–06:30)</option>
+          <option value="morning" selected>🌅 Jutarnja (06:30–12:00)</option>
+          <option value="afternoon">☀️ Poslijepodnevna (12:00–18:00)</option>
+          <option value="evening">🌆 Večernja (18:00–00:00)</option>
+          <option value="custom">⚙️ Prilagođena</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Napomena</label><input type="text" class="text-input" id="ms-note" placeholder="Zamjena, prekovremeno..."></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" id="modal-shift-cancel">Otkaži</button>
+      <button class="btn-primary" id="modal-shift-save">Sačuvaj</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Copy shifts -->
+<div id="modal-copy" class="modal-overlay hidden">
+  <div class="modal" style="width:540px">
+    <div class="modal-header"><h3 id="modal-copy-title">Kopiraj Smjene</h3><button class="modal-close" id="modal-copy-close">✕</button></div>
+    <div class="modal-body">
+      <div class="copy-info-box" id="modal-copy-desc"></div>
+
+      <div class="form-group" style="margin-bottom:12px">
+        <label>KOPIRAJ ZA OSOBE</label>
+        <div class="copy-person-chips" id="copy-person-chips"></div>
+        <div style="margin-top:6px;display:flex;gap:8px">
+          <button class="btn-ghost btn-sm" id="copy-sel-all-persons">✓ Sve osobe</button>
+          <button class="btn-ghost btn-sm" id="copy-sel-no-persons">✗ Poništi</button>
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-bottom:10px">
+        <div class="form-group">
+          <label>NAČIN KOPIRANJA</label>
+          <div class="copy-mode-row">
+            <button class="copy-mode-btn" id="copy-mode-exact" data-mode="exact">
+              📋 Tačna kopija<br><small>Isti datum → isti datum</small>
+            </button>
+            <button class="copy-mode-btn active" id="copy-mode-chrono" data-mode="chrono">
+              🔄 Hronološki<br><small>Prati dane sedmice u redu</small>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>PREPIŠI POSTOJEĆE</label>
+          <label class="toggle" style="margin-top:8px"><input type="checkbox" id="copy-overwrite"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>KOPIRAJ U — ODABERI CILJNE MJESECE</label>
+        <div class="copy-targets-grid" id="copy-targets-grid"></div>
+        <div class="copy-quick-row" style="margin-top:8px">
+          <button class="btn-ghost btn-sm" id="copy-sel-next">Sljedeći mj.</button>
+          <button class="btn-ghost btn-sm" id="copy-sel-all">Svih 12 mj.</button>
+          <button class="btn-ghost btn-sm" id="copy-sel-none">Poništi sve</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" id="modal-copy-cancel">Otkaži</button>
+      <button class="btn-primary" id="modal-copy-confirm">📋 Kopiraj odabrane</button>
+    </div>
+  </div>
+</div>
+ </div>
+</div>
+
+<!-- CONTEXT MENU: Calendar shift actions -->
+<div id="shift-context-menu" class="shift-ctx-menu hidden">
+  <div class="ctx-header" id="ctx-header"></div>
+  <button class="ctx-btn" id="ctx-edit">✏️ Izmijeni smjenu</button>
+  <button class="ctx-btn ctx-del" id="ctx-delete">🗑️ Obriši smjenu</button>
+  <div style="height:1px;background:var(--border);margin:2px 0"></div>
+  <button class="ctx-btn" id="ctx-select-day">☑ Odaberi sve u ovom danu</button>
+  <button class="ctx-btn" id="ctx-select-all">☑ Odaberi sve smjene osobe</button>
+</div>
+
+<!-- MODAL: Reminder -->
+<div id="modal-reminder" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header"><h3>Novi Podsjetnik</h3><button class="modal-close" id="modal-rem-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Naslov</label><input type="text" class="text-input" id="rem-title" placeholder="Unesi naslov..."></div>
+      <div class="form-row">
+        <div class="form-group"><label>Datum</label><input type="date" class="text-input" id="rem-date"></div>
+        <div class="form-group"><label>Kategorija</label>
+          <select class="select-input" id="rem-category">
+            <option value="work">Posao</option><option value="personal">Lično</option><option value="urgent">Hitno</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Opis</label><textarea class="text-input" id="rem-desc" rows="3" placeholder="Detalji..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" id="modal-rem-cancel">Otkaži</button>
+      <button class="btn-primary" id="modal-rem-save">Dodaj</button>
+    </div>
+  </div>
+</div>
+
+<!-- Print overlay -->
+<div id="print-overlay" class="hidden"><div id="print-content"></div></div>
+
+<!-- MODAL: Custom prompt (replaces window.prompt for Electron) -->
+<div id="modal-prompt" class="modal-overlay hidden">
+  <div class="modal" style="width:380px">
+    <div class="modal-header">
+      <h3 id="modal-prompt-title">Unesi naziv</h3>
+      <button class="modal-close" id="modal-prompt-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label id="modal-prompt-label">Naziv</label>
+        <input type="text" class="text-input" id="modal-prompt-input" placeholder="">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" id="modal-prompt-cancel">Otkaži</button>
+      <button class="btn-primary" id="modal-prompt-ok">OK</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="parser.js"></script>
+<script src="exporter.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
